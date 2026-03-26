@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP 扫描器 - 网络工具</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-pattern"></div>
+    
+    <div class="container">
+        <!-- 头部区域 -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-network-wired"></i>
+                <h1>IP 扫描器</h1>
+            </div>
+            <p class="subtitle">快速、准确的网络设备扫描工具</p>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 扫描配置卡片 -->
+            <div class="card scan-config-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-cog"></i> 扫描配置</h2>
+                </div>
+                <div class="card-body">
+                    <div class="input-section">
+                        <div class="input-group">
+                            <label for="startIP">
+                                <i class="fas fa-arrow-right"></i> 起始 IP
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="text" id="startIP" value="192.168.200.1" placeholder="例如: 192.168.200.1">
+                                <span class="input-icon"><i class="fas fa-server"></i></span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="endIP">
+                                <i class="fas fa-flag-checkered"></i> 结束 IP
+                            </label>
+                            <div class="input-wrapper">
+                                <input type="text" id="endIP" value="192.168.200.255" placeholder="例如: 192.168.200.255">
+                                <span class="input-icon"><i class="fas fa-globe"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="scanButton" class="scan-button">
+                        <i class="fas fa-play"></i>
+                        <span>开始扫描</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 统计信息卡片 -->
+            <div id="statsCard" class="card stats-card" style="display: none;">
+                <div class="card-header">
+                    <h2><i class="fas fa-chart-bar"></i> 扫描统计</h2>
+                </div>
+                <div class="card-body">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon online-icon">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-label">在线设备</div>
+                                <div id="onlineCount" class="stat-value">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon arp-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-label">ARP 检测</div>
+                                <div id="arpCount" class="stat-value">0</div>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon icmp-icon">
+                                <i class="fas fa-signal"></i>
+                            </div>
+                            <div class="stat-info">
+                                <div class="stat-label">ICMP Ping</div>
+                                <div id="icmpCount" class="stat-value">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 扫描结果卡片 -->
+            <div id="resultsCard" class="card results-card" style="display: none;">
+                <div class="card-header">
+                    <h2><i class="fas fa-th"></i> 扫描结果</h2>
+                    <div class="card-actions">
+                        <button class="action-btn" onclick="exportResults()">
+                            <i class="fas fa-download"></i> 导出
+                        </button>
+                        <button class="action-btn" onclick="clearResults()">
+                            <i class="fas fa-trash"></i> 清除
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="ipGrid" class="ip-grid"></div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p>&copy; 2024 IP Scanner. 高性能网络扫描工具</p>
+        </footer>
+    </div>
+
+    <!-- IP详情弹窗 -->
+    <div id="ipDetailModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> IP 详细信息</h3>
+                <button class="close-btn" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- 动态内容 -->
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn primary-btn" onclick="closeModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 加载遮罩 -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>正在扫描网络...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
